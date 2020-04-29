@@ -2,6 +2,7 @@ import socket
 from urllib.parse import urlparse
 import configparser
 import ssdp
+import sys
 
 
 class Tatasky:
@@ -88,6 +89,10 @@ if __name__ == '__main__':
         hostIP = config['Tatasky']['ip']
     except:
         tvs = ssdp.scan_network()
+        if(len(tvs) == 0):
+            print('No devices found')
+            sys.exit()
+
         for x in tvs:
             hostIP = urlparse(x).hostname
         config['Tatasky'] = {'ip': hostIP}
